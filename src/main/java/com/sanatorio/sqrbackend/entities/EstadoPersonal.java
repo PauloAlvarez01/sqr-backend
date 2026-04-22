@@ -1,0 +1,19 @@
+package com.sanatorio.sqrbackend.entities;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "estado_personal")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class EstadoPersonal {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idEstadoPersonal;
+
+    @Column(nullable = false, length = 25, unique = true)
+    private String nombreEstadoPersonal;
+}
