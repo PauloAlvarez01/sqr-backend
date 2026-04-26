@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RolSistemaRepository extends JpaRepository<RolSistema, Integer> {
+
+    // Verifico que no exista el nuevo registro, aunque la bbdd tiene AK en ese campo.
+    boolean existsByNombreRolSistema(String nombreRolSistema);
 }
