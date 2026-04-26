@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostoperatorioRepository extends JpaRepository<Postoperatorio, Integer> {
+
+    boolean existsByNombrePostoperatorio(String nombrePostoperatorio);
 }
