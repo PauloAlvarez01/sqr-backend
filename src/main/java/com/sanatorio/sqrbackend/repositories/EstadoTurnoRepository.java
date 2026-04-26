@@ -1,9 +1,9 @@
 package com.sanatorio.sqrbackend.repositories;
 
-import com.sanatorio.sqrbackend.entities.Paciente;
+import com.sanatorio.sqrbackend.entities.EstadoTurno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PacienteRepository extends JpaRepository<Paciente, Integer> {
+public interface EstadoTurnoRepository extends JpaRepository<EstadoTurno, Integer> {
 }
