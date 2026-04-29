@@ -60,8 +60,4 @@ public class Paciente {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime fechaModificacion;
-
-    @ManyToOne
-    @JoinColumn(name = "id_obra_social", nullable = false)
-    private ObraSocial obraSocial;
 }
