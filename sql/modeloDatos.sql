@@ -1,5 +1,5 @@
 -- Created by Redgate Data Modeler (https://datamodeler.redgate-platform.com)
--- Last modification date: 2026-04-23 22:30:54.292
+-- Last modification date: 2026-04-29 00:39:42.332
 
 -- tables
 -- Table: CIRUGIA
@@ -113,7 +113,6 @@ CREATE TABLE PACIENTE (
                           nombre_paciente varchar(25)  NOT NULL,
                           dni varchar(15)  NOT NULL,
                           telefono_paciente varchar(25)  NOT NULL,
-                          id_obra_social int  NOT NULL,
                           fecha_nacimiento_paciente date  NOT NULL,
                           sexo varchar(25)  NULL,
                           email varchar(100)  NULL,
@@ -207,6 +206,7 @@ CREATE TABLE TURNO (
                        fecha_creacion timestamp  NOT NULL,
                        modificado_por varchar(25)  NOT NULL,
                        fecha_modificacion timestamp  NOT NULL,
+                       id_obra_social int  NOT NULL,
                        CONSTRAINT PK_TURNO PRIMARY KEY (id_turno)
 );
 
@@ -291,14 +291,6 @@ ALTER TABLE EVENTO_TURNO ADD CONSTRAINT FK_EVENTO_TURNO_TIPO_EVENTO
 ALTER TABLE EVENTO_TURNO ADD CONSTRAINT FK_EVENTO_TURNO_TURNO
     FOREIGN KEY (id_turno)
         REFERENCES TURNO (id_turno)
-        NOT DEFERRABLE
-            INITIALLY IMMEDIATE
-;
-
--- Reference: FK_PACIENTE_OBRA_SOCIAL (table: PACIENTE)
-ALTER TABLE PACIENTE ADD CONSTRAINT FK_PACIENTE_OBRA_SOCIAL
-    FOREIGN KEY (id_obra_social)
-        REFERENCES OBRA_SOCIAL (id_obra_social)
         NOT DEFERRABLE
             INITIALLY IMMEDIATE
 ;
@@ -411,6 +403,14 @@ ALTER TABLE USUARIO ADD CONSTRAINT FK_USUARIO_PERSONAL
 ALTER TABLE USUARIO ADD CONSTRAINT FK_USUARIO_ROL_SISTEMA
     FOREIGN KEY (id_rol_sistema)
         REFERENCES ROL_SISTEMA (id_rol_sistema)
+        NOT DEFERRABLE
+            INITIALLY IMMEDIATE
+;
+
+-- Reference: TURNO_OBRA_SOCIAL (table: TURNO)
+ALTER TABLE TURNO ADD CONSTRAINT TURNO_OBRA_SOCIAL
+    FOREIGN KEY (id_obra_social)
+        REFERENCES OBRA_SOCIAL (id_obra_social)
         NOT DEFERRABLE
             INITIALLY IMMEDIATE
 ;
