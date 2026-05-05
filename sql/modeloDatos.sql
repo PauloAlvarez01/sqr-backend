@@ -1,11 +1,23 @@
 -- Created by Redgate Data Modeler (https://datamodeler.redgate-platform.com)
--- Last modification date: 2026-04-29 00:39:42.332
+-- Last modification date: 2026-05-05 22:50:58.06
 
 -- tables
+-- Table: ASIGNACION_SALA
+CREATE TABLE ASIGNACION_SALA (
+                                 id_asignacion int  NOT NULL,
+                                 id_disponibilidad_personal int  NOT NULL,
+                                 id_quirofano int  NOT NULL,
+                                 id_rol int  NOT NULL,
+                                 CONSTRAINT PK_ASIGNACION_SALA PRIMARY KEY (id_asignacion)
+);
+
 -- Table: CIRUGIA
 CREATE TABLE CIRUGIA (
                          id_cirugia serial  NOT NULL,
                          nombre_cirugia varchar(25)  NOT NULL,
+                         requiere_circulante boolean  NOT NULL,
+                         requiere_rx boolean  NOT NULL,
+                         requiere_microscopio boolean  NOT NULL,
                          CONSTRAINT AK_CIRUGIA UNIQUE (nombre_cirugia) NOT DEFERRABLE  INITIALLY IMMEDIATE,
                          CONSTRAINT PK_CIRUGIA PRIMARY KEY (id_cirugia)
 );
@@ -231,6 +243,30 @@ CREATE TABLE USUARIO (
 );
 
 -- foreign keys
+-- Reference: FK_ASIGNACION_SALA_DISPONIBILIDAD_PERSONAL (table: ASIGNACION_SALA)
+ALTER TABLE ASIGNACION_SALA ADD CONSTRAINT FK_ASIGNACION_SALA_DISPONIBILIDAD_PERSONAL
+    FOREIGN KEY (id_disponibilidad_personal)
+        REFERENCES DISPONIBILIDAD_PERSONAL (id_disponibilidad_personal)
+        NOT DEFERRABLE
+            INITIALLY IMMEDIATE
+;
+
+-- Reference: FK_ASIGNACION_SALA_QUIROFANO (table: ASIGNACION_SALA)
+ALTER TABLE ASIGNACION_SALA ADD CONSTRAINT FK_ASIGNACION_SALA_QUIROFANO
+    FOREIGN KEY (id_quirofano)
+        REFERENCES QUIROFANO (id_quirofano)
+        NOT DEFERRABLE
+            INITIALLY IMMEDIATE
+;
+
+-- Reference: FK_ASIGNACION_SALA_ROL (table: ASIGNACION_SALA)
+ALTER TABLE ASIGNACION_SALA ADD CONSTRAINT FK_ASIGNACION_SALA_ROL
+    FOREIGN KEY (id_rol)
+        REFERENCES ROL (id_rol)
+        NOT DEFERRABLE
+            INITIALLY IMMEDIATE
+;
+
 -- Reference: FK_CIRUJANO_ESPECIALIDAD (table: CIRUJANO)
 ALTER TABLE CIRUJANO ADD CONSTRAINT FK_CIRUJANO_ESPECIALIDAD
     FOREIGN KEY (id_especialidad)

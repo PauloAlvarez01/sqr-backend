@@ -24,30 +24,34 @@ public class CirugiaService {
 
     public Cirugia crear(Cirugia entidad) {
         if (cirugiaRepository.existsByNombreCirugia(entidad.getNombreCirugia())) {
-            throw new IllegalArgumentException("Ya existe un registro con el nombre: " + entidad.getNombreCirugia());
+            throw new IllegalArgumentException("Ya existe una cirugía registrada con el nombre: " + entidad.getNombreCirugia());
         }
         return cirugiaRepository.save(entidad);
     }
 
     public Cirugia actualizar(Integer id, Cirugia entidadActualizada) {
         Cirugia entidadExistente = cirugiaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("El registro con ID " + id + " no existe"));
+                .orElseThrow(() -> new IllegalArgumentException("La cirugía con ID " + id + " no existe"));
 
-        if (!entidadExistente.getNombreCirugia().equals(entidadActualizada.getNombreCirugia()) &&
+        // Validar si el nombre cambió y si el nuevo ya existe
+        if (!entidadExistente.getNombreCirugia().equalsIgnoreCase(entidadActualizada.getNombreCirugia()) &&
                 cirugiaRepository.existsByNombreCirugia(entidadActualizada.getNombreCirugia())) {
-            throw new IllegalArgumentException("Ya existe otro registro con el nombre: " + entidadActualizada.getNombreCirugia());
+            throw new IllegalArgumentException("Ya existe otra cirugía con el nombre: " + entidadActualizada.getNombreCirugia());
         }
 
+        // Actualizamos los campos
         entidadExistente.setNombreCirugia(entidadActualizada.getNombreCirugia());
+        entidadExistente.setRequiereCirculante(entidadActualizada.isRequiereCirculante());
+        entidadExistente.setRequiereRx(entidadActualizada.isRequiereRx());
+        entidadExistente.setRequiereMicroscopio(entidadActualizada.isRequiereMicroscopio());
+
         return cirugiaRepository.save(entidadExistente);
     }
 
     public void eliminar(Integer id) {
         if (!cirugiaRepository.existsById(id)) {
-            throw new IllegalArgumentException("El registro con ID " + id + " no existe");
+            throw new IllegalArgumentException("La cirugía con ID " + id + " no existe");
         }
         cirugiaRepository.deleteById(id);
     }
 }
-
-
